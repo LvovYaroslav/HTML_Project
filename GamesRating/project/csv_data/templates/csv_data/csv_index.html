@@ -1,0 +1,534 @@
+{% extends "base.html" %}
+
+{% block content %}
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/generic.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/csv_index.css') }}">
+<link rel="stylesheet" href="https://cdn.pydata.org/bokeh/release/bokeh-0.12.6.min.css" type="text/css" />      
+<script type="text/javascript" src="https://cdn.pydata.org/bokeh/release/bokeh-0.12.6.min.js"></script>
+
+<!-- start of heading section -->
+<header role='heading'>
+  <div>
+    <h1>CSV DATA PAGE</h1>
+    <h3>Analyzing the CSV Data</h3>
+  </div>
+</header>
+<!-- end of heading section -->
+
+<!-- Start of main section -->
+<main role='Main'>
+
+  <div class='center'>
+    <h3 class='font font_big font_fix_responsive'>Basic Information</h3>
+  </div>
+
+  <section class='basic_information'>
+
+    <div class='basic_information_div'>
+      <p class='font'>Correlation Between global sales and critic score: {{ score_sales_correlation }} (Very Weak)</p>
+      <p class='font'>Correlation Between U.S sales and critic score: {{ score_sales_correlation_US }} (Very Weak)</p>
+      <p class='font'>Average game rating: {{ mean_game_rating }} (All years and genre)</p>
+    </div>
+
+  </section>
+
+  <hr class="style5">
+
+  <div class='center background_color'>
+    <h3 class='font font_big font_fix_responsive'>Simple Queries</h3>
+  </div>
+
+  <section class='simple_query_section'>
+
+    <div class='query_box box1'>
+      <h4 class='font'>Max Rating by Genre and Year</h4>
+      <h6 class='font'>Please enter a year 1980 - 2016</h6>
+      <p class='font'>Enter Year:<input type="text" id='year' size="10" name='year' required></p>
+      <select id='genre' name='genre'>
+        <option  value='Sports'>Sports</option>
+        <option value='Racing'>Racing</option>
+        <option value='Platform'>Platform</option>
+        <option value='Action'>Action</option>
+        <option value='Puzzle'>Puzzle</option>
+        <option value='Shooter'>Shooter</option>
+        <option value='Fighting'>Fighting</option>
+        <option value='Shooter'>Platform</option>
+        <option value='Simulation'>Simulation</option>
+        <option value='Role-Playing'>Role-Playing</option>
+        <option value='Adventure'>Adventure</option>
+        <option value='Strategy'>Strategy</option>
+        <option value='Misc'>Misc</option>
+      </select>
+      <p class='font'>Result: <span id="max_rating_results">?</span></p>
+      <p><a class='font' onclick="validateYear()" href=# id="max_rating">Return Max Rating</a></p>
+    </div>
+
+    <div class="query_box box2">
+      <h4 class='font'>Critic Score of Game</h4>
+        <label class='font' for = "automplete-1">Game Title:</label>
+        <input id="automplete-1">
+        <p class='font'>Result: <span id="title">?</span></p>
+        <a class='font' href=# id="title_rating">Return Title Rating</a></p>
+    </div>
+
+    <div class='query_box box3'>
+      <h4 class='font'>Max Earnings by Genre</h4>
+      <h6 class='font'>Please Select a Genre</h6>
+      <select id='genre_max_earnings' name='genre'>
+        <option value='Sports'>Sports</option>
+        <option value='Racing'>Racing</option>
+        <option value='Platform'>Platform</option>
+        <option value='Action'>Action</option>
+        <option value='Puzzle'>Puzzle</option>
+        <option value='Shooter'>Shooter</option>
+        <option value='Fighting'>Fighting</option>
+        <option value='Shooter'>Platform</option>
+        <option value='Simulation'>Simulation</option>
+        <option value='Role-Playing'>Role-Playing</option>
+        <option value='Adventure'>Adventure</option>
+        <option value='Strategy'>Strategy</option>
+        <option value='Misc'>Misc</option>
+      </select>
+      <p class='font'>Result: <span id="max_earnings_results">?</span></p>
+      <p class='font'><a onclick="validateYear()" href=# id="max_earnings">Return Max Earnings</a></p>
+    </div>
+
+  </section>
+
+  <hr class="style5">
+
+  <div class='center'>
+    <h3 class='font font_big'>First Graph Area</h3>
+    <h4 class='graph_message'>Graphs are not displayed on small screens</h4>
+  </div>
+
+  <!-- This section will contain all of the HTML code for the first graph section -->
+  <section class='graph_section'>
+
+    <div class='select_graph_area'>
+      <h5 class='font'>To see a graph, please select one from the menu below</h5>
+      <select id="select_graph">
+        <option value="all">All Systems</option>
+        <option value="2600">Atari 2600</option>
+        <option value="NES">NES</option>
+        <option value="SNES">SNES</option>
+        <option value="N64">N64</option>
+        <option value="GC">Game Cube</option>
+        <option value="Wii">Wii</option>
+        <option value="WiiU">Wii U</option>
+        <option value="GB">Game Boy</option>
+        <option value="DS">DS</option>
+        <option value="3DS">3DS</option>
+        <option value="Xbox">X-Box</option>
+        <option value="360">X-Box 360</option>
+        <option value="Xone">Xbox One</option>
+        <option value="PS">PS</option>
+        <option value="PS2">PS2</option>
+        <option value="PS3">PS3</option>
+        <option value="PS4">PS4</option>
+      </select>
+      <button class='font' onclick='selectGraph(); return false;'>Push To Change Graph</button>
+    </div>
+
+    <div id='graphOne'>
+      <div class="bk-root">
+        <div class="bk-plotdiv" id="1921ea58-3819-4d1f-a4e8-acb315e5e111"></div>
+      </div>
+    </div>
+
+    <div id='graphTwo'>
+      <div class="bk-root">
+        <div class="bk-plotdiv" id="5758488f-78f0-46ed-a0fd-bd7b4bb97909"></div>
+      </div>
+    </div>
+
+    <div id='graphThree'>
+      <div class="bk-root">
+        <div class="bk-plotdiv" id="2205dec5-e528-4b31-8a96-85710bb1243b"></div>
+      </div>
+    </div>
+
+    <div id='graphFour'>
+      <div class="bk-root">
+        <div class="bk-plotdiv" id="deea388e-07bc-424b-825f-fdba2eaa35e4"></div>
+      </div>
+    </div>
+
+    <div id='graphFive'>
+      <div class="bk-root">
+          <div class="bk-plotdiv" id="d71094fe-2369-46b9-b5ae-b0457c9bd477"></div>
+      </div>
+    </div>
+
+    <div id='graphSix'>
+      <div class="bk-root">
+          <div class="bk-plotdiv" id="1f024027-2d62-45b7-a4eb-f2227790bb22"></div>
+      </div>
+    </div>
+
+    <div id='graphSeven'>
+      <div class="bk-root">
+          <div class="bk-plotdiv" id="065c3fa6-68dd-43b5-a543-b05eefa4df77"></div>
+      </div>
+    </div>
+
+    <div id='graphEight'>
+      <div class="bk-root">
+          <div class="bk-plotdiv" id="305dff9c-80d0-4165-ae19-be4f0545c0b2"></div>
+      </div>
+    </div>
+
+    <div id='graphNine'>
+      <div class="bk-root">
+          <div class="bk-plotdiv" id="60990773-b60b-42fc-9b4c-976277eee7c1"></div>
+      </div>
+    </div>
+
+    <div id='graphTen'>
+      <div class="bk-root">
+        <div class="bk-plotdiv" id="eb400e1a-bd03-4302-b7a7-05eb8cc83aac"></div>
+      </div>
+    </div>
+
+    <div id='graphEleven'>
+      <div class="bk-root">
+          <div class="bk-plotdiv" id="39e772f1-60f9-47e7-a5e7-b0d4974b1229"></div>
+      </div>
+    </div>
+
+    <div id='graphTwelve'>
+      <div class="bk-root">
+          <div class="bk-plotdiv" id="540d0768-dd32-4827-bf4a-394a1f2ce817"></div>
+      </div>
+    </div>
+
+    <div id='graphThirteen'>
+      <div class="bk-root">
+          <div class="bk-plotdiv" id="a079a37a-428d-441d-a5bf-76faae31c6c5"></div>
+      </div>
+    </div>
+
+    <div id='graphFourteen'>
+      <div class="bk-root">
+          <div class="bk-plotdiv" id="ca621055-c08c-4d34-aaea-de19727dc536"></div>
+      </div>
+    </div>
+
+    <div id='graphFifteen'>
+      <div class="bk-root">
+        <div class="bk-plotdiv" id="bda456c3-37f7-492a-9405-b7100df9701a"></div>
+      </div>
+    </div>
+
+    <div id='graphSixteen'>
+      <div class="bk-root">
+          <div class="bk-plotdiv" id="6bff7b30-7614-47ba-a90a-ac9000d5b0d4"></div>
+      </div>
+    </div>
+
+    <div id='graphSeventeen'>
+      <div class="bk-root">
+          <div class="bk-plotdiv" id="c3561ccd-5454-4929-9be2-2f6e96a5a87f"></div>
+      </div>
+    </div>
+
+    <div id='graphEightteen'>
+      <div class="bk-root">
+        <div class="bk-plotdiv" id="13de0284-ad4c-4cc1-9ab7-753df0031ea2"></div>
+      </div>
+    </div>
+
+  </section>
+  <!-- End of First Graph Section -->
+
+  <hr class="style5">
+
+  <div class='center'>
+    <h3 class='font font_big'>Second Graph Area</h3>
+    <h4 class='graph_message'>Graphs are not displayed on small screens</h4>
+  </div>
+
+  <!-- Start of second graph section --> 
+  <section id='graph_section_two'>
+    <!-- The graphs here will show game count by genre -->
+    <div class='select_graph_area_two'>
+      <h5 class='font'>To see a graph, please select one from the menu below</h5>
+      <select id="select_genre_graph">
+        <option value="action">Action</option>
+        <option value="fighting">Fighting</option>
+        <option value="platform">Platform</option>
+        <option value="racing">Racing</option>
+        <option value="role">Role Playing</option>
+        <option value="shooter">Shooter</option>
+        
+      </select>
+      <button class='font' onclick='selectGenreGraph(); return false;'>Push To Change Graph</button>
+    </div>
+
+    <div id='graphOne_genre'>
+      <div class="bk-root">
+          <div class="bk-plotdiv" id="ba372a75-e1ae-426a-836b-fae6213709bc"></div>
+      </div>
+    </div>
+
+    <div id='graphTwo_genre'>
+      <div class="bk-root">
+          <div class="bk-plotdiv" id="f2b74666-65ad-450e-acef-50a6ab57ea3a"></div>
+      </div>
+    </div>
+
+    <div id='graphThree_genre'>
+      <div class="bk-root">
+          <div class="bk-plotdiv" id="d59a0adc-c8c4-4c03-8847-5fe5a5c907f5"></div>
+      </div>
+    </div>
+
+    <div id='graphFour_genre'>
+      <div class="bk-root">
+          <div class="bk-plotdiv" id="98686c23-2c82-46de-bc95-ff7451480621"></div>
+      </div>
+    </div>
+
+    <div id='graphFive_genre'>
+      <div class="bk-root">
+          <div class="bk-plotdiv" id="17fc50d1-83ac-496c-9527-5d54c5cf73a2"></div>
+      </div>
+    </div>
+
+    <div id='graphSix_genre'>
+      <div class="bk-root">
+          <div class="bk-plotdiv" id="84624920-dea2-4444-bc97-3b93c377b32d"></div>
+      </div>
+    </div>
+
+  </section>
+  <!-- End of second graph section -->
+
+  <hr class="style5">
+
+  <div class='center'>
+    <h3 class='font font_big'>1. Undertale</h3>
+    <h4 class='graph_message'>Graphs are not displayed on small screens</h4>
+  </div>
+
+  <!-- Start of third graph area -->
+  <section id='graph_section_three'>
+
+    <div class='third_graph'>
+<!--       <img src="'../../../static/img/ratings.png'"> -->
+    </div>
+
+    <div class='font paragraph'>
+      <p> Undertale is a 2D indie-RPG, created by Toby Fox. It's an RPG where noone needs to die! Explore the big world and meet new friends or enemies! Great story and music!(Complete, 10 hours of gameplay, 259 rubles)
+      </p>
+    </div>
+    
+  </section>
+
+
+  <hr class="style5">
+
+  <div class='center'>
+    <h3 class='font font_big'>2. Delatrune</h3>
+    <h4 class='graph_message'>Graphs are not displayed on small screens</h4>
+  </div>
+
+  <!-- Start of third graph area -->
+  <section id='graph_section_four'>
+
+    <div class='fourth_graph'>
+<!--       <img src="'../../../static/img/ratings.png'"> -->
+    </div>
+
+    <div class='font paragraph'>
+      <p> Deltarune is a 2D indie-RPG, created by the same developer! Get into completely new world with your friends!(Demo 2 chapters out of 7, 8 hours of gameplay, Free)
+      </p>
+    </div>
+
+  </section>
+  <!-- End of third graph area -->
+
+  <hr class="style5">
+
+  <div class='center'>
+    <h3 class='font font_big'>3. Crosscode</h3>
+    <h4 class='graph_message'>Graphs are not displayed on small screens</h4>
+  </div>
+
+
+
+
+    <section id='graph_section_five'>
+
+    <div class='fifth_graph'>
+<!--       <img src="'../../../static/img/ratings.png'"> -->
+    </div>
+
+    <div class='font paragraph'>
+      <p> Crosscode is a 2D action-RPG, created by Radical Fish Games! Fight enemies, solve puzzles, compete with your friends and enemies!(Complete, 70 hours of gameplay, 886 Rubles)
+      </p>
+    </div>
+
+  </section>
+  <!-- End of third graph area -->
+
+
+  <hr class="style5">
+
+  <div class='center'>
+    <h3 class='font font_big'>4. Hollow Knight</h3>
+    <h4 class='graph_message'>Graphs are not displayed on small screens</h4>
+  </div>
+
+
+    <section id='graph_section_six'>
+
+    <div class='sixth_graph'>
+<!--       <img src="'../../../static/img/ratings.png'"> -->
+    </div>
+
+    <div class='font paragraph'>
+      <p> Hollow knight is a 2D Metroidvania, created by Team Cherry! Explore the world, learn the story, get new upgrades, create a unique set of charms!(Complete, 40 hours of gameplay, 550 Rubles)
+      </p>
+    </div>
+
+  </section>
+
+
+  <hr class="style5">
+  <div class='center'>
+    <h3 class='font font_big'>5. Celeste</h3>
+    <h4 class='graph_message'>Graphs are not displayed on small screens</h4>
+  </div>
+
+  <section id='graph_section_seven'>
+
+    <div class='seventh_graph'>
+<!--       <img src="'../../../static/img/ratings.png'"> -->
+    </div>
+
+    <div class='font paragraph'>
+      <p> Celeste is a 2D Platformer, created by Matt Makes Games! Easy to learn and enjoyable movement! Overcome your challenges and climb the mountain!(Complete, 8 hours of gameplay, 710 Rubles)
+      </p>
+    </div>
+
+  </section>
+</main>
+<!-- End of main section -->
+
+<script src='{{ url_for('static', filename='js/csvData.js') }}'></script>
+<script src='{{ url_for('static', filename='js/graph.js') }}'></script>
+<script type="text/javascript">
+//The code below will change the graph on the graph page when the user selects a 
+//specific graph to look at. I'm not 100% sure why, but when this code is moved into a 
+//seperate JS file, the graphs do not appear. 
+  
+  //This function will clear out the previous graphs on the page. Thus, when a user selects 
+  //a new graph to look at, this function will clear out the old one. 
+  let reset = () => {
+    document.getElementById("graphOne").style.display = "none";
+    document.getElementById("graphTwo").style.display = "none";
+    document.getElementById("graphThree").style.display = "none";
+    document.getElementById("graphFour").style.display = "none";
+    document.getElementById("graphFive").style.display = "none";
+    document.getElementById("graphSix").style.display = "none";
+    document.getElementById("graphSeven").style.display = "none";
+    document.getElementById('graphEight').style.display = "none";
+    document.getElementById('graphNine').style.display = "none";
+    document.getElementById('graphTen').style.display = "none";
+    document.getElementById('graphEleven').style.display = "none";
+    document.getElementById('graphTwelve').style.display = "none";
+    document.getElementById('graphThirteen').style.display = "none";
+    document.getElementById('graphFourteen').style.display = "none";
+    document.getElementById('graphFifteen').style.display = "none";
+    document.getElementById('graphSixteen').style.display = "none";
+    document.getElementById('graphSeventeen').style.display = "none";
+    document.getElementById('graphEightteen').style.display = "none";
+  };
+
+  //This function will fire when the user hits the button on the select menu. 
+  let selectGraph = () => {
+    //I get the value for what the user selected. 
+    let selected_graph = document.getElementById('select_graph').value;
+    //Calling the reset function from above which will remove any graph on the screen so that 
+    //only one graph is seen at a time. 
+    reset();
+    //This conditional statement will unhide the graph based on what the user selected 
+    //from the selected statement. I also all the marginTop style because the graphs where 
+    //moving further and further down the page. 
+    if (selected_graph == "all") {
+      document.getElementById("graphOne").style.display = "block";
+    }else if (selected_graph == '2600'){
+      document.getElementById("graphTwo").style.display = "block";
+    }else if (selected_graph == 'Xone'){
+      document.getElementById("graphThree").style.display = "block";
+    }else if (selected_graph == 'Xbox'){
+      document.getElementById('graphFour').style.display = "block";
+    }else if (selected_graph == '360'){
+       document.getElementById('graphFive').style.display = "block";
+    }else if (selected_graph == 'WiiU') {
+      document.getElementById('graphSix').style.display = "block";
+    }else if (selected_graph == 'Wii'){
+      document.getElementById('graphSeven').style.display = "block";
+    }else if (selected_graph == 'SNES'){
+      document.getElementById('graphEight').style.display = "block";
+    }else if (selected_graph == 'PS4'){
+      document.getElementById('graphNine').style.display = "block";
+    }else if (selected_graph == 'PS3'){
+      document.getElementById('graphTen').style.display = "block";
+    }else if (selected_graph == 'PS2'){
+      document.getElementById('graphEleven').style.display = "block";
+    }else if (selected_graph == 'PS'){
+      document.getElementById('graphTwelve').style.display = "block";
+    }else if (selected_graph == 'NES'){
+      document.getElementById('graphThirteen').style.display = "block";
+    }else if (selected_graph == 'N64'){
+      document.getElementById('graphFourteen').style.display = "block";
+    }else if (selected_graph == 'GB'){
+      document.getElementById('graphFifteen').style.display = "block";
+    }else if (selected_graph == 'DS'){
+      document.getElementById('graphSixteen').style.display = "block";
+    }else if (selected_graph == '3DS'){
+      document.getElementById('graphSeventeen').style.display = "block";
+    }else if (selected_graph == 'GC'){
+      document.getElementById('graphEightteen').style.display = "block";
+    }
+
+  }
+
+  let reset_genre = () => {
+    document.getElementById("graphOne_genre").style.display = "none";
+    document.getElementById("graphTwo_genre").style.display = "none";
+    document.getElementById("graphThree_genre").style.display = "none";
+    document.getElementById("graphFour_genre").style.display = "none";
+    document.getElementById("graphFive_genre").style.display = "none";
+    document.getElementById("graphSix_genre").style.display = "none";
+  };
+
+  let selectGenreGraph = () => {
+
+    let selected_genre = document.getElementById('select_genre_graph').value; 
+
+    reset_genre();
+
+    if (selected_genre == "action") {
+      document.getElementById("graphOne_genre").style.display = "block";
+    }else if (selected_genre == "fighting"){
+      document.getElementById("graphTwo_genre").style.display = "block";
+    }else if (selected_genre == "platform"){
+      document.getElementById("graphThree_genre").style.display = "block";
+    }else if (selected_genre == "racing"){
+      document.getElementById("graphFour_genre").style.display = "block";
+    }else if (selected_genre == "role"){
+      document.getElementById("graphFive_genre").style.display = "block";
+    }else if (selected_genre == "shooter"){
+      document.getElementById("graphSix_genre").style.display = "block";
+    }
+
+  }
+
+</script>
+
+{% endblock %}
+
+<!-- [ 'Misc' 'Simulation' 'Role-Playing' 'Adventure' 'Strategy'] -->

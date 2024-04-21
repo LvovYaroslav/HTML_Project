@@ -1,0 +1,74 @@
+/* All the CSS in this page will deal with the home.html page */
+
+main {
+  display: grid;
+  grid-gap: .5em;
+  grid-template-columns: 1fr 1fr;
+  position:fixed;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.picture_one {
+  background-image: url('../img/gamer.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+/*.picture_one:hover {
+  box-shadow: 10px 15px #4286f4;
+  height: 650px;
+}*/
+
+.picture_two {
+  background-image: url('../img/ps4.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+/*.picture_two:hover {
+  box-shadow: 10px 15px #4286f4;
+  height: 650px;
+}*/
+
+.div_styling {
+  border: 2px solid #4286f4;
+  background-color: rgba(244, 176, 66, 0.7);
+  color: white;
+  padding: 15px;
+  border-radius: 12px;
+}
+
+h1 > a {
+  color: #4286f4;
+  text-decoration: none;
+}
+
+h1 > a:hover {
+  text-decoration: none;
+  color: #86f442;
+}
+
+@media only all and (max-width: 768px) {
+
+    main {
+      display: grid;
+      grid-template-columns: 1fr;
+    }
+
+    h1 > a {
+      font-size: 30px;
+    }
+}

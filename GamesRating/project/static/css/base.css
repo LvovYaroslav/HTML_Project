@@ -1,0 +1,75 @@
+/************************
+The code in this file will deal with the base.html CSS 
+*************************/
+
+
+/************************
+The Code here will deal with the nav bar
+*************************/
+
+/*nav {
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #4286f4;
+  height: 100px;
+}*/
+
+/*ul {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  list-style-type: none;
+  font-family: 'Chela One', cursive;
+  font-size: 30px;
+  margin-top: 20px;
+}
+
+
+li a {
+  color: #f4b042;
+}
+
+li a:hover {
+  color: #86f442;
+  text-decoration: none;
+}*/
+
+.color {
+  color: #f4b042;
+}
+
+/************************
+The Code here will deal with the footer 
+*************************/
+
+footer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+  margin-bottom: 50px;
+}
+
+/************************
+Media queries will go here 
+*************************/
+@media only all and (max-width: 768px) {
+
+  nav {
+    height: 250px;
+  }
+
+  ul {
+    flex-direction: column;
+  }
+
+  footer {
+    text-align: center;
+  }
+
+}
+
+

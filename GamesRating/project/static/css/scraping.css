@@ -1,0 +1,58 @@
+/*******************************
+The CSS in this page will deal with the scraping.html page 
+*******************************/
+.font_size {
+  font-size: 25px;
+}
+
+main {
+  display: flex;
+  flex-flow: column;
+}
+
+#form_section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+}
+
+form {
+  margin-top: 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 2px solid #f4b042;
+  background-color: #4286f4;
+  border-radius: 20px;
+  padding: 10px;
+}
+
+#scrape_button {
+  background-color: #86f442;
+  border: #86f442;
+  padding: 8px;
+  margin-bottom: 10px;
+}
+
+#scrape_button:hover {
+  background-color: #f4b042;
+  color: #4286f4;
+}
+
+.font-color {
+  color: #f4b042;
+}
+
+/*******************************
+The below code will build the graph
+*******************************/
+
+#graph_section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+

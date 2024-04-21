@@ -1,0 +1,294 @@
+/* The code in this file all deals with the csv_index.html page */
+
+/***********************
+Generic CSS
+************************/
+
+* {
+    box-sizing: border-box;
+}
+
+.center {
+  text-align: center;
+}
+
+/***********************
+Code for the header section 
+************************/
+
+header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 50px;
+  background-image: url('../img/arcade2.jpg');
+  background-size: cover;
+  height: 500px;
+  width: 100%;
+}
+
+header > div {
+  border: 2px solid #4286f4;
+  border-radius: 10px;
+  padding: 15px;
+  color: white;
+  background-color: rgba(244, 176, 66, 0.7);
+  font-family: 'Gaegu', cursive;
+}
+
+/***********************
+Code for the basic information section
+************************/
+
+.basic_information {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.basic_information_div {
+  text-align: center;
+}
+
+
+/***********************
+Code for the simple query section 
+************************/
+.simple_query_section {
+  display: grid;
+  grid-template-columns: repeat(minmax(300px, 1fr));
+  grid-gap: 2em;
+  grid-template-areas:
+  ". one two three .";
+  justify-items: center;
+}
+
+.query_box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #4286f4;
+  padding: 10px;
+  border-radius: 12px;
+  background-color: rgb(244, 176, 66);
+}
+
+.box1 {
+  grid-area: one;
+  text-align: center;
+}
+
+.box2 {
+  grid-area: two;
+}
+
+.box3 {
+  grid-area: three;
+  text-align: center;
+}
+
+/***********************
+Code for the graph section 
+************************/
+
+.graph_section {
+  margin-top: 100px;
+}
+
+.graph_message {
+  display: none;
+}
+
+.select_graph_area {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: -75px;
+  margin-bottom: 50px;
+}
+
+#graphTwo, #graphThree, #graphFour, #graphFive, #graphSix, #graphSeven,
+#graphEight, #graphNine, #graphTen, #graphEleven, #graphTwelve, #graphThirteen,
+#graphFourteen, #graphFifteen, #graphSixteen, #graphSeventeen, #graphEightteen {
+  display: none;
+}
+
+#graphTwo_genre, #graphThree_genre, #graphFour_genre, #graphFive_genre, #graphSix_genre{
+  display: none;
+}
+
+.bk-root {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.select_graph_area_two {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin-top: -10px;
+}
+
+/***********************
+Code for the Third Graph section 
+************************/
+
+#graph_section_three {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.third_graph {
+  height: 600px;
+  width: 800px;
+  background-image: url('../img/undertale.jpg');
+  background-size: cover;
+}
+
+.paragraph {
+  width: 700px;
+  font-size: 20px;
+}
+
+
+
+#graph_section_four {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.fourth_graph {
+  height: 600px;
+  width: 800px;
+  background-image: url('../img/deltarune.jpg');
+  background-size: cover;
+}
+
+.paragraph {
+  width: 700px;
+  font-size: 20px;
+}
+
+
+#graph_section_five {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.fifth_graph {
+  height: 800px;
+  width: 1000px;
+  background-image: url('../img/crosscode.jpg');
+  background-size: cover;
+}
+
+.paragraph {
+  width: 700px;
+  font-size: 20px;
+}
+
+
+#graph_section_six {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.sixth_graph {
+  height: 600px;
+  width: 800px;
+  background-image: url('../img/hollowknight.jpg');
+  background-size: cover;
+}
+
+.paragraph {
+  width: 700px;
+  font-size: 20px;
+}
+
+
+#graph_section_seven {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.seventh_graph {
+  height: 900px;
+  width: 900px;
+  background-image: url('../img/Celeste.jpg');
+  background-size: cover;
+}
+
+.paragraph {
+  width: 700px;
+  font-size: 20px;
+}
+
+/***********************
+Media Query Code
+************************/
+@media only all and (max-width: 768px) {
+
+  header > div {
+    text-align: center;
+  }
+
+  .font_fix_responsive {
+    font-size: 40px;
+  }
+
+  .simple_query_section {
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-areas:
+    "one"
+    "two"
+    "three";
+  }
+
+/*  .box1 {
+    text-align: center;
+  }
+
+  .box2 {
+    text-align: center;
+  }
+
+  .box3 {
+    text-align: center;
+  }
+*/
+  .graph_section {
+    display: none;
+  }
+
+  #graph_section_two {
+    display: none;
+  }
+
+  #graph_section_three {
+    display: none;
+  }
+
+  .graph_message {
+    display: block;
+  }
+
+
+}
